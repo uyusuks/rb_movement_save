@@ -35,7 +35,7 @@ uis.InputBegan:Connect(function(input: InputObject, gp: boolean)
 
 	local any_key_down: boolean = false
 
-	for _, key in pairs(default_keys) do
+	for _, key: Enum.KeyCode in pairs(default_keys) do
 
 		if uis:IsKeyDown(key) then
 
@@ -59,13 +59,13 @@ uis.InputBegan:Connect(function(input: InputObject, gp: boolean)
 	end
 end)
 
-uis.InputEnded:Connect(function(_, gp: boolean)
+uis.InputEnded:Connect(function(_: InputObject, gp: boolean)
 
 	if gp then return end
 
 	local amount_of_left_keys: number = 0
 
-	for _, key in pairs(default_keys) do
+	for _, key: Enum.KeyCode in pairs(default_keys) do
 
 		if not uis:IsKeyDown(key) then
 
