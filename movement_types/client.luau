@@ -1,3 +1,5 @@
+--!nonstrict
+
 local rs: ReplicatedStorage = game:GetService("ReplicatedStorage")
 local uis: UserInputService = game:GetService("UserInputService")
 local cas: ContextActionService = game:GetService("ContextActionService")
