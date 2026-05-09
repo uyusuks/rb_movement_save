@@ -1,49 +1,49 @@
-local rs = game:GetService("ReplicatedStorage")
-local uis = game:GetService("UserInputService")
-local cas = game:GetService("ContextActionService")
-local ps = game:GetService("Players")
+local rs: ReplicatedStorage = game:GetService("ReplicatedStorage")
+local uis: UserInputService = game:GetService("UserInputService")
+local cas: ContextActionService = game:GetService("ContextActionService")
+local ps: Players = game:GetService("Players")
 
-local p = ps.LocalPlayer
-local ch = p.Character or p.CharacterAdded:Wait()
-local hrp = ch:WaitForChild("HumanoidRootPart")
+local p: Player? = ps.LocalPlayer
+local ch: Model = p.Character or p.CharacterAdded:Wait()
+local hrp: BasePart = ch:WaitForChild("HumanoidRootPart")
 
-local modules_folder = rs:WaitForChild("modules")
-local netray = require(modules_folder:WaitForChild("netray"))
+local modules_folder: Folder = rs:WaitForChild("modules")
+local netray: ModuleScript = require(modules_folder:WaitForChild("netray"))
 
-local movement_event = netray:GetEvent("movement")
+local movement_event: RemoteEvent = netray:GetEvent("movement")
 
-local run_status = false
+local run_status: boolean = false
 
-local function slide(_, state, _)
+local function slide(_, state: Enum.UserInputState, _)
 
-    if state ~= Enum.UserInputState.Begin then return end
+	if state ~= Enum.UserInputState.Begin then return end
 
-        local hrp_velocity = hrp.AssemblyLinearVelocity
-        local dir = (Vector3.new(hrp_velocity.X, 0, hrp_velocity.Z)).Unit
+	local hrp_velocity: Vector3 = hrp.AssemblyLinearVelocity
+	local dir: Vector3 = (Vector3.new(hrp_velocity.X, 0, hrp_velocity.Z)).Unit
 
-    if dir.Magnitude == math.huge or dir.Magnitude ~= dir.Magnitude then return end
+	if dir.Magnitude == math.huge or dir.Magnitude ~= dir.Magnitude then return end
 
-        movement_event:FireServer({
+	movement_event:FireServer({
 
-        movement_type = "slide",
-        dir = dir
-    })
+		movement_type = "slide",
+		dir = dir
+	})
 end
 
 cas:BindAction("slide", slide, false, Enum.KeyCode.Q)
 
-uis.InputBegan:Connect(function(input, gp)
-    
-    if gp then return end
+uis.InputBegan:Connect(function(input: InputObject, gp: boolean)
 
-    if input.KeyCode == Enum.KeyCode.LeftControl then
+	if gp then return end
 
-        movement_event:FireServer({
+	if input.KeyCode == Enum.KeyCode.LeftControl then
 
-            movement_type = "run",
-            run_status = run_status
-        })
-    end
+		movement_event:FireServer({
 
-    run_status = not run_status
+			movement_type = "run",
+			run_status = run_status
+		})
+	end
+
+	run_status = not run_status
 end)
