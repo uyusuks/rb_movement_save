@@ -23,7 +23,9 @@ local right_rot: CFrame = origin_rot * CFrame.Angles(0, 0, math.rad(-15))
 
 local tinfo: TweenInfo = TweenInfo.new(.2)
 
-local default_keys = {
+type key_list = {Enum.KeyCode}
+
+local default_keys: key_list = {
 
 	Enum.KeyCode.A,
 	Enum.KeyCode.D
