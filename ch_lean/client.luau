@@ -1,27 +1,27 @@
---!nonstrict
+--!strict
 
-local ps: Players = game:GetService("Players")
-local ts: TweenService = game:GetService("TweenService")
-local uis: UserInputService = game:GetService("UserInputService")
+local ps = game:GetService("Players") :: Players
+local ts = game:GetService("TweenService") :: TweenService
+local uis = game:GetService("UserInputService") :: UserInputService
 
-local p: Player? = ps.LocalPlayer
+local p = ps.LocalPlayer :: Player
 local ch: Model = p.Character or p.CharacterAdded:Wait()
-local hrp: BasePart = ch:WaitForChild("HumanoidRootPart")
-local lw_torso: BasePart = ch:WaitForChild("LowerTorso")
+local hrp = ch:WaitForChild("HumanoidRootPart") :: BasePart
+local lw_torso = ch:WaitForChild("LowerTorso") :: Part
 
-local root: Motor6D = Instance.new("Motor6D")
+local root = Instance.new("Motor6D") :: Motor6D
 
 root.Name = "freaky_root"
 root.Part0 = hrp
 root.Part1 = lw_torso
 root.Parent = lw_torso
 
-local origin_rot: CFrame = root.C0
+local origin_rot = root.C0 :: CFrame
 
-local left_rot: CFrame = origin_rot * CFrame.Angles(0, 0, math.rad(15))
-local right_rot: CFrame = origin_rot * CFrame.Angles(0, 0, math.rad(-15))
+local left_rot = origin_rot * CFrame.Angles(0, 0, math.rad(15)) :: CFrame
+local right_rot = origin_rot * CFrame.Angles(0, 0, math.rad(-15)) :: CFrame
 
-local tinfo: TweenInfo = TweenInfo.new(.2)
+local tinfo = TweenInfo.new(.2) :: TweenInfo
 
 type key_list = {Enum.KeyCode}
 
@@ -35,7 +35,7 @@ uis.InputBegan:Connect(function(input: InputObject, gp: boolean)
 
 	if gp then return end
 
-	local any_key_down: boolean = false
+	local any_key_down = false :: boolean
 
 	for _, key: Enum.KeyCode in pairs(default_keys) do
 
@@ -65,7 +65,7 @@ uis.InputEnded:Connect(function(_: InputObject, gp: boolean)
 
 	if gp then return end
 
-	local amount_of_left_keys: number = 0
+	local amount_of_left_keys = 0 :: number
 
 	for _, key: Enum.KeyCode in pairs(default_keys) do
 
