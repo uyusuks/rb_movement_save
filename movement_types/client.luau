@@ -1,27 +1,27 @@
---!nonstrict
+--!strict
 
-local rs: ReplicatedStorage = game:GetService("ReplicatedStorage")
-local uis: UserInputService = game:GetService("UserInputService")
-local cas: ContextActionService = game:GetService("ContextActionService")
-local ps: Players = game:GetService("Players")
+local rs = game:GetService("ReplicatedStorage") :: ReplicatedStorage
+local uis = game:GetService("UserInputService") :: UserInputService
+local cas = game:GetService("ContextActionService") :: ContextActionService
+local ps = game:GetService("Players") :: Players
 
-local p: Player? = ps.LocalPlayer
+local p = ps.LocalPlayer :: Player
 local ch: Model = p.Character or p.CharacterAdded:Wait()
-local hrp: BasePart = ch:WaitForChild("HumanoidRootPart")
+local hrp = ch:WaitForChild("HumanoidRootPart") :: BasePart
 
-local modules_folder: Folder = rs:WaitForChild("modules")
-local netray: ModuleScript = require(modules_folder:WaitForChild("netray"))
+local modules_folder = rs:WaitForChild("modules") :: Folder
+local netray = require(modules_folder:WaitForChild("netray")) :: any
 
-local movement_event: RemoteEvent = netray:GetEvent("movement")
+local movement_event = netray:GetEvent("movement") :: any
 
-local run_status: boolean = false
+local run_status = false :: boolean
 
 local function slide(_, state: Enum.UserInputState, _)
 
 	if state ~= Enum.UserInputState.Begin then return end
 
-	local hrp_velocity: Vector3 = hrp.AssemblyLinearVelocity
-	local dir: Vector3 = (Vector3.new(hrp_velocity.X, 0, hrp_velocity.Z)).Unit
+	local hrp_velocity = hrp.AssemblyLinearVelocity :: Vector3
+	local dir = (Vector3.new(hrp_velocity.X, 0, hrp_velocity.Z)).Unit :: Vector3
 
 	if dir.Magnitude == math.huge or dir.Magnitude ~= dir.Magnitude then return end
 
