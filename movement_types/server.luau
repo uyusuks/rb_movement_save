@@ -1,19 +1,19 @@
---!nonstrict
+--!strict
 
-local rs: ReplicatedStorage = game:GetService("ReplicatedStorage")
+local rs = game:GetService("ReplicatedStorage") :: ReplicatedStorage
 
-local modules_folder: Folder = rs:WaitForChild("modules")
-local netray: ModuleScript = require(modules_folder:WaitForChild("netray"))
+local modules_folder = rs:WaitForChild("modules") :: Folder
+local netray = require(modules_folder:WaitForChild("netray")) :: any
 
-local movement_event: RemoteEvent = netray:RegisterEvent("movement")
+local movement_event = netray:RegisterEvent("movement") :: any
 
 local movement_save = {}
 
 movement_event:OnEvent(function(p: Player, data)
 
 	local ch: Model = p.Character or p.CharacterAdded:Wait()
-	local hrp: BasePart = ch:WaitForChild("HumanoidRootPart")
-	local hmd: Humanoid = ch:WaitForChild("Humanoid")
+	local hrp = ch:WaitForChild("HumanoidRootPart") :: BasePart
+	local hmd = ch:WaitForChild("Humanoid") :: Humanoid
 
 	if data.movement_type == "run" then
 
@@ -29,11 +29,11 @@ movement_event:OnEvent(function(p: Player, data)
 
 	elseif data.movement_type == "slide" then
 
-		local dir: Vector3 = data.dir
+		local dir = data.dir :: Vector3
 
 		if dir.Magnitude == math.huge or dir.Magnitude ~= dir.Magnitude then return end
 
-		local bv: BodyVelocity = Instance.new("BodyVelocity")
+		local bv = Instance.new("BodyVelocity") :: BodyVelocity
 		bv.MaxForce = Vector3.new(4e4, 0, 4e4)
 		bv.Velocity = 60 * dir
 
